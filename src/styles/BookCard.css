@@ -1,0 +1,28 @@
+.book-card {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    max-width: 400px;
+    margin: 10px;
+  }
+  
+  .book-card img {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  .book-info h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .book-info p {
+    margin: 5px 0 0;
+    color: #666;
+  }

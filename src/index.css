@@ -1,13 +1,62 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7fafc;
+  color: #1a202c;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: #3182ce;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #ed8936;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.dark-mode {
+  background-color: #2d3748;
+  color: #e2e8f0;
+}
+
+.dark-mode a {
+  color: #63b3ed;
+}
+
+.dark-mode a:hover {
+  color: #fbd38d;
+}
+
+.dark-mode .book-details,
+.dark-mode .book-card,
+.dark-mode .pdf-viewer,
+.dark-mode .no-pdf,
+.dark-mode .dashboard,
+.dark-mode .login,
+.dark-mode .signup {
+  background-color: #4a5568;
+  color: #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
 }

@@ -1,0 +1,37 @@
+.pdf-viewer {
+    margin: 20px auto;
+    max-width: 800px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .pdf-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .pdf-controls button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pdf-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pdf-controls span {
+    font-size: 16px;
+    line-height: 32px;
+  }
+  
+  .pdf-viewer canvas {
+    width: 100%;
+    height: auto;
+  }

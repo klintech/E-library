@@ -1,0 +1,51 @@
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import './Signup.css';
+
+function Signup() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div className="signup">
+      <h2>Sign Up</h2>
+      {error && <p className="error">{error}</p>}
+      <form onSubmit={handleSignup}>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
+        <button type="submit">Sign Up</button>
+      </form>
+      <p>
+        Already have an account? <Link to="/login">Log In</Link>
+      </p>
+    </div>
+  );
+}
+
+export default Signup;

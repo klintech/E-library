@@ -1,0 +1,63 @@
+.pdf-viewer {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pdf-controls button {
+  padding: 10px 20px;
+  background-color: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.pdf-controls button:hover {
+  background-color: #2b6cb0;
+}
+
+.pdf-controls button:disabled {
+  background-color: #e2e8f0;
+  cursor: not-allowed;
+}
+
+.pdf-controls span {
+  font-size: 16px;
+  color: #1a202c;
+}
+
+.error {
+  color: #e53e3e;
+  text-align: center;
+  font-size: 16px;
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .pdf-viewer {
+    padding: 16px;
+    margin: 16px;
+  }
+
+  .pdf-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

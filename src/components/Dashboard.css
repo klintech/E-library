@@ -1,0 +1,38 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard h1 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.dashboard h2 {
+  font-size: 22px;
+  color: #2c3e50;
+  margin: 24px 0 16px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 16px;
+    margin: 16px;
+  }
+
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
+}
