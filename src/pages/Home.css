@@ -1,54 +1,59 @@
-.home {
-  max-width: 1400px;
+.carousel {
+  position: relative;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
-}
-
-.hero {
-  text-align: center;
-  padding: 48px 24px;
-  background: linear-gradient(135deg, #3182ce, #1a202c);
-  color: #fff;
   border-radius: 12px;
-  margin-bottom: 32px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.hero h1 {
+.carousel img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+
+.carousel h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
   font-size: 36px;
-  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
-.hero p {
-  font-size: 18px;
-  margin-bottom: 24px;
+.carousel-controls {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
 }
 
-.home h2 {
-  font-size: 24px;
-  color: #1a202c;
-  margin: 24px 0 16px;
+.carousel-controls button {
+  width: 12px;
+  height: 12px;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+.carousel-controls button.active {
+  background-color: #3182ce;
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 32px 16px;
+  .carousel img {
+    height: 200px;
   }
 
-  .hero h1 {
-    font-size: 28px;
-  }
-
-  .hero p {
-    font-size: 16px;
-  }
-
-  .book-grid {
-    grid-template-columns: 1fr;
+  .carousel h1 {
+    font-size: 24px;
   }
 }

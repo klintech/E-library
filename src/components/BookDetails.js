@@ -39,7 +39,9 @@ function BookDetails() {
         try {
           const olResponse = await fetch(`https://openlibrary.org/search.json?q=${titleQuery}`);
           const olData = await olResponse.json();
-          const bookData = olData.docs.find((doc) => doc.ebook_access === 'public' && doc.formats?.['application/pdf']);
+          const bookData = olData.docs.find(
+            (doc) => doc.ebook_access === 'public' && doc.formats?.['application/pdf']
+          );
           if (bookData?.formats?.['application/pdf']) {
             setPdfUrl(bookData.formats['application/pdf']);
           }
@@ -47,15 +49,15 @@ function BookDetails() {
           console.error('Error fetching Open Library PDF:', error);
         }
 
-        // If no PDF, try Project Gutenberg
+        // Try Project Gutenberg
         if (!pdfUrl) {
           try {
             const gutenbergResponse = await fetch(
               `https://gutendex.com/books?search=${encodeURIComponent(titleQuery)}`
             );
             const gutenbergData = await gutenbergResponse.json();
-            const gutenbergBook = gutenbergData.results.find((book) =>
-              book.formats['application/pdf']
+            const gutenbergBook = gutenbergData.results.find(
+              (book) => book.formats['application/pdf']
             );
             if (gutenbergBook?.formats['application/pdf']) {
               setPdfUrl(gutenbergBook.formats['application/pdf']);
@@ -65,7 +67,23 @@ function BookDetails() {
           }
         }
 
-        // If still no PDF, use a fallback and fetch similar books
+        // Try Standard Ebooks (using their catalog)
+        if (!pdfUrl) {
+          try {
+            const standardResponse = await fetch('https://standardebooks.org/ebooks.json');
+            const standardData = await standardResponse.json();
+            const standardBook = standardData.find((book) =>
+              book.title.toLowerCase().includes(data.volumeInfo.title.toLowerCase())
+            );
+            if (standardBook?.downloads['application/pdf']) {
+              setPdfUrl(standardBook.downloads['application/pdf']);
+            }
+          } catch (error) {
+            console.error('Error fetching Standard Ebooks PDF:', error);
+          }
+        }
+
+        // Fallback and similar books
         if (!pdfUrl) {
           setIsFreeBook(false);
           const fallbackPdfsByGenre = {
@@ -78,10 +96,13 @@ function BookDetails() {
               'https://www.gutenberg.org/ebooks/174/files/174-pdf.pdf', // The Picture of Dorian Gray
               'https://www.gutenberg.org/ebooks/11/files/11-pdf.pdf', // Alice's Adventures in Wonderland
             ],
-            // Add more genres as needed
+            'middle grade': [
+              'https://www.gutenberg.org/ebooks/5670/files/5670-pdf.pdf', // The Secret Garden
+              'https://www.gutenberg.org/ebooks/514/files/514-pdf.pdf', // Little Women
+            ],
           };
           const category = data.volumeInfo.categories?.[0]?.toLowerCase() || 'fiction';
-          const fallbackPdfs = fallbackPdfsByGenre[category] || fallbackPdfsByGenre.fiction;
+          const fallbackPdfs = fallbackPdfsByGenre[category] || fallbackPdfsByGenre['middle grade'] || fallbackPdfsByGenre.fiction;
           setPdfUrl(fallbackPdfs[Math.floor(Math.random() * fallbackPdfs.length)]);
 
           // Fetch similar books from Google Books
@@ -169,9 +190,17 @@ function BookDetails() {
         pdfUrl ? (
           <>
             {!isFreeBook && (
-              <p className="pdf-warning">
-                A free e-book for "{title}" is not available. Enjoy this similar free book instead!
-              </p>
+              <div className="pdf-warning">
+                <p>
+                  A free e-book for "{title}" is not available due to copyright. Try this free classic instead, or explore more below!
+                </p>
+                <button
+                  onClick={() => navigate('/?q=subject:classics')}
+                  className="explore-button"
+                >
+                  Explore Free Classics
+                </button>
+              </div>
             )}
             <PdfViewer bookId={id} pdfUrl={pdfUrl} />
           </>
@@ -195,6 +224,12 @@ function BookDetails() {
             ) : (
               <p>No similar books found. Try searching for another title.</p>
             )}
+            <button
+              onClick={() => navigate('/?q=subject:classics')}
+              className="explore-button"
+            >
+              Explore Free Classics
+            </button>
           </div>
         )
       ) : (

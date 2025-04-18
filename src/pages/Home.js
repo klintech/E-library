@@ -7,6 +7,13 @@ function Home() {
   const [books, setBooks] = useState([]);
   const [bestsellers, setBestsellers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    { title: 'NY Times Bestsellers', query: 'bestsellers', image: 'https://via.placeholder.com/1200x400?text=Bestsellers' },
+    { title: 'Classic Literature', query: 'subject:classics', image: 'https://via.placeholder.com/1200x400?text=Classics' },
+    { title: 'New Novels', query: 'subject:novels', image: 'https://via.placeholder.com/1200x400?text=Novels' },
+  ];
 
   useEffect(() => {
     async function fetchCuratedBooks() {
@@ -62,11 +69,27 @@ function Home() {
     }
   };
 
+  const handleSlideChange = (index) => {
+    setCurrentSlide(index);
+    handleSearch(slides[index].query);
+  };
+
   return (
     <div className="home">
       <div className="hero">
-        <h1>Discover Your Next Great Read</h1>
-        <p>Explore thousands of books, novels, and more!</p>
+        <div className="carousel">
+          <img src={slides[currentSlide].image} alt={slides[currentSlide].title} />
+          <h1>{slides[currentSlide].title}</h1>
+          <div className="carousel-controls">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleSlideChange(index)}
+                className={currentSlide === index ? 'active' : ''}
+              />
+            ))}
+          </div>
+        </div>
         <SearchBar onSearch={handleSearch} />
       </div>
       <h2>NY Times Bestsellers</h2>
